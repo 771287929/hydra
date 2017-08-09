@@ -21,7 +21,8 @@ public class Span implements Serializable {
     private List<BinaryAnnotation> binaryAnnotations;
     private boolean isSample;
 
-    public boolean isSample() {
+   
+	public boolean isSample() {
         return isSample;
     }
 

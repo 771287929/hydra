@@ -54,7 +54,7 @@ public class Tracer {
         span.setServiceId(serviceId);
         return span;
     }
-
+  
     // 构件rootSpan,是否采样
     public Span newSpan(String spanname, Endpoint endpoint, String serviceId) {
         boolean s = isSample();

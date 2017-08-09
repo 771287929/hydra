@@ -20,8 +20,8 @@ Hydra自身提供跟踪数据展现功能，基于angularJS和D3.js。
 
 对于hydra重新梳理代码结构，以应用于现有的框架系统
 
-
-
 重合名 hydra-mysql为hydra-store-mysql
 重命名 hydra-hbase 为hydra-store-hbase
 
+
+修改相应的filter及存储逻辑使其适应restful服务的trace
