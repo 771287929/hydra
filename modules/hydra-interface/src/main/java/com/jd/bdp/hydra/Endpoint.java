@@ -3,25 +3,25 @@ package com.jd.bdp.hydra;
 import java.io.Serializable;
 
 /**
- * Date: 13-3-18
- * Time: 下午3:36
+ * Date: 13-3-18 Time: 下午3:36
  */
 public class Endpoint implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -7796016009786143774L;
-	private String ip;
+     * 
+     */
+    private static final long serialVersionUID = -7796016009786143774L;
+    private String ip;
     private Integer port;
-//    private String serviceName;
+    // private String serviceName;
 
-    public Endpoint(){
+    public Endpoint() {
 
     }
+
     public Endpoint(String ip, Integer port, String serviceName) {
         this.ip = ip;
         this.port = port;
-//        this.serviceName = serviceName;
+        // this.serviceName = serviceName;
     }
 
     public String getIp() {
@@ -40,33 +40,35 @@ public class Endpoint implements Serializable {
         this.port = port;
     }
 
-//    public String getServiceName() {
-//        return serviceName;
-//    }
-//
-//    public void setServiceName(String serviceName) {
-//        this.serviceName = serviceName;
-//    }
+    // public String getServiceName() {
+    // return serviceName;
+    // }
+    //
+    // public void setServiceName(String serviceName) {
+    // this.serviceName = serviceName;
+    // }
 
     @Override
     public String toString() {
-        return "Endpoint{" +
-                "ip='" + ip + '\'' +
-                ", port=" + port +
-//                ", serviceName='" + serviceName + '\'' +
+        return "Endpoint{" + "ip='" + ip + '\'' + ", port=" + port +
+        // ", serviceName='" + serviceName + '\'' +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Endpoint)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof Endpoint))
+            return false;
 
         Endpoint endpoint = (Endpoint) o;
 
-        if (!ip.equals(endpoint.ip)) return false;
-        if (!port.equals(endpoint.port)) return false;
-//        if (!serviceName.equals(endpoint.serviceName)) return false;
+        if (!ip.equals(endpoint.ip))
+            return false;
+        if (!port.equals(endpoint.port))
+            return false;
+        // if (!serviceName.equals(endpoint.serviceName)) return false;
 
         return true;
     }
@@ -75,7 +77,7 @@ public class Endpoint implements Serializable {
     public int hashCode() {
         int result = ip.hashCode();
         result = 31 * result + port.hashCode();
-//        result = 31 * result + serviceName.hashCode();
+        // result = 31 * result + serviceName.hashCode();
         return result;
     }
 }

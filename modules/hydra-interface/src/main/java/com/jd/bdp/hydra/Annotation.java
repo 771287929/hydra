@@ -3,36 +3,36 @@ package com.jd.bdp.hydra;
 import java.io.Serializable;
 
 /**
- * Date: 13-3-18
- * Time: 下午3:36
+ * Date: 13-3-18 Time: 下午3:36
  */
 public class Annotation implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -381720121226343875L;
-	public static final String CLIENT_SEND = "cs";
+     * 
+     */
+    private static final long serialVersionUID = -381720121226343875L;
+    public static final String CLIENT_SEND = "cs";
     public static final String CLIENT_RECEIVE = "cr";
     public static final String SERVER_SEND = "ss";
-    public static final String SERVER_RECEIVE = "sr";  
+    public static final String SERVER_RECEIVE = "sr";
     private String value;
     private Endpoint host;
     private Long timestamp;
     private Integer duration;
 
-    
-    private String paras;//增加参数，记录rpc方法调用的参数
-    
-    
+    private String paras;// 增加参数，记录rpc方法调用的参数
+
     public String getParas() {
-		return paras;
-	}
-	public void setParas(String paras) {
-		this.paras = paras;
-	}
-	public Annotation(){
+        return paras;
+    }
+
+    public void setParas(String paras) {
+        this.paras = paras;
+    }
+
+    public Annotation() {
 
     }
+
     public Annotation(Long timestamp, String value, Endpoint host) {
         this.timestamp = timestamp;
         this.value = value;
@@ -73,25 +73,27 @@ public class Annotation implements Serializable {
 
     @Override
     public String toString() {
-        return "Annotation{" +
-                "timestamp=" + timestamp +
-                ", value='" + value + '\'' +
-                ", host=" + host +
-                ", duration=" + duration +
-                '}';
+        return "Annotation{" + "timestamp=" + timestamp + ", value='" + value + '\'' + ", host=" + host + ", duration="
+                + duration + '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Annotation)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof Annotation))
+            return false;
 
         Annotation that = (Annotation) o;
 
-        if (duration!=null&&!duration.equals(that.duration)) return false;
-        if (!host.equals(that.host)) return false;
-        if (!timestamp.equals(that.timestamp)) return false;
-        if (!value.equals(that.value)) return false;
+        if (duration != null && !duration.equals(that.duration))
+            return false;
+        if (!host.equals(that.host))
+            return false;
+        if (!timestamp.equals(that.timestamp))
+            return false;
+        if (!value.equals(that.value))
+            return false;
 
         return true;
     }

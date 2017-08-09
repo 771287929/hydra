@@ -1,29 +1,36 @@
 package dao;
 
-import com.jd.bdp.hydra.Span;
-import com.jd.bdp.hydra.mysql.persistent.dao.AnnotationMapper;
-import com.jd.bdp.hydra.mysql.persistent.entity.Absannotation;
-import org.junit.Test;
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * User: biandi
- * Date: 13-5-9
- * Time: 下午3:37
- */
-public class AnnotationMapperTest extends AbstractDependencyInjectionSpringContextTests {
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-    @Override
-    protected String[] getConfigLocations() {
-        String[] location = {"classpath:hydra-mysql.xml"};
-        return location;
-    }
+import com.jd.bdp.hydra.Span;
+import com.jd.bdp.hydra.mysql.persistent.dao.AnnotationMapper;
+import com.jd.bdp.hydra.mysql.persistent.entity.Absannotation;
+
+/**
+ * User: biandi Date: 13-5-9 Time: 下午3:37
+ */
+@RunWith(SpringJUnit4ClassRunner.class) // 使用junit4进行测试
+@ContextConfiguration(locations = { "classpath:hydra-mysql.xml" })
+public class AnnotationMapperTest // extends
+                                  // AbstractDependencyInjectionSpringContextTests
+{
+
+    /*
+     * @Override protected String[] getConfigLocations() { String[] location =
+     * {"classpath:hydra-mysql.xml"}; return location; }
+     */
 
     @Test
-    public void testGetAnnotations(){
+    public void testGetAnnotations() {
         try {
             annotationMapper.deleteAllAnnotation();
             prepareTestAnnotations();
@@ -38,22 +45,23 @@ public class AnnotationMapperTest extends AbstractDependencyInjectionSpringConte
             assertEquals(2, list.size());
             boolean f1 = false;
             boolean f2 = false;
-            for(Absannotation ann : list){
-                if (ann.getKey().equalsIgnoreCase("cs") &&  ann.getValue().equalsIgnoreCase(String.valueOf(1368002575495L))){
+            for (Absannotation ann : list) {
+                if (ann.getKey().equalsIgnoreCase("cs")
+                        && ann.getValue().equalsIgnoreCase(String.valueOf(1368002575495L))) {
                     f1 = true;
                     continue;
                 }
-                if (ann.getKey().equalsIgnoreCase("dubbo.exception") && ann.getValue().equalsIgnoreCase("abc")){
+                if (ann.getKey().equalsIgnoreCase("dubbo.exception") && ann.getValue().equalsIgnoreCase("abc")) {
                     f2 = true;
                     continue;
                 }
             }
             assertTrue(f1);
             assertTrue(f2);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             assertTrue(false);
-        }finally {
+        } finally {
             annotationMapper.deleteAllAnnotation();
         }
 
@@ -73,7 +81,6 @@ public class AnnotationMapperTest extends AbstractDependencyInjectionSpringConte
         annotationMapper.addAnnotation(ann1);
         annotationMapper.addAnnotation(ann2);
     }
-
 
     private AnnotationMapper annotationMapper;
 

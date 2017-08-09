@@ -16,29 +16,36 @@
 
 package dao;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import com.jd.bdp.hydra.mysql.persistent.dao.AnnotationMapper;
 import com.jd.bdp.hydra.mysql.persistent.dao.TraceMapper;
 import com.jd.bdp.hydra.mysql.persistent.entity.Absannotation;
 import com.jd.bdp.hydra.mysql.persistent.entity.Trace;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * User: biandi
  * Date: 13-5-8
  * Time: 下午4:35
  */
-public class TraceMapperTest extends AbstractDependencyInjectionSpringContextTests {
+@RunWith(SpringJUnit4ClassRunner.class) // 使用junit4进行测试
+@ContextConfiguration(locations = { "classpath:hydra-mysql.xml" })
+public class TraceMapperTest //extends AbstractDependencyInjectionSpringContextTests 
+{
 
-    @Override
+   /* @Override
     protected String[] getConfigLocations() {
         String[] location = {"classpath:hydra-mysql.xml"};
         return location;
-    }
+    }*/
 
     @Test
     public void testFindTraces(){

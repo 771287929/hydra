@@ -17,23 +17,31 @@
 package dao;
 
 
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import com.jd.bdp.hydra.mysql.persistent.dao.AppMapper;
 import com.jd.bdp.hydra.mysql.persistent.entity.AppPara;
-import org.junit.Test;
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 
 /**
  * User: xiangkui
  * Date: 13-4-1
  * Time: 下午1:27
  */
-public class AppMapperTest extends AbstractDependencyInjectionSpringContextTests {
+@RunWith(SpringJUnit4ClassRunner.class) //使用junit4进行测试  
+@ContextConfiguration(locations={"classpath:hydra-manager-db.xml"}) 
+public class AppMapperTest //extends AbstractDependencyInjectionSpringContextTests
+{
 
-    @Override
+   /* @Override
     protected String[] getConfigLocations() {
         String[] location = {"classpath:hydra-manager-db.xml"};
         return location;
-    }
+    }*/
 
     /**
      * # 测试数据库 #

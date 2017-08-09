@@ -11,24 +11,29 @@ import com.jd.bdp.hydra.dubbomonitor.HydraService;
 import com.jd.bdp.hydra.dubbomonitor.provider.impl.support.Configuration;
 import com.jd.bdp.hydra.store.inter.InsertService;
 
+/**
+ * 直接使用mysql存储trace log
+ * 
+ * @author Administrator
+ *
+ */
 public class HydraMysqlServiceImpl implements HydraService {
 
-    private ArrayBlockingQueue<List<Span>> queue; //如果出现性能，可以应用disruptor来测试一下
-    private int taskCount=3;
+    private ArrayBlockingQueue<List<Span>> queue; // 如果出现性能，可以应用disruptor来测试一下
+    private int taskCount = 3;
     private ExecutorService executors = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-
 
     public HydraMysqlServiceImpl() {
         queue = new ArrayBlockingQueue<List<Span>>(2048);
-        this.taskCount=3;
+        this.taskCount = 3;
         for (int i = 0; i < taskCount; i++) {
             executors.execute(new InsertTask());
         }
     }
 
     public HydraMysqlServiceImpl(Configuration c) {
-       // int queueSize= c.getTaskCount() == null ? 2048 : c.getQueueSize();
-    	int queueSize=c.getQueueSize()==null?2048:c.getQueueSize();
+        // int queueSize= c.getTaskCount() == null ? 2048 : c.getQueueSize();
+        int queueSize = c.getQueueSize() == null ? 2048 : c.getQueueSize();
         this.taskCount = c.getTaskCount() == null ? 3 : c.getTaskCount();
         queue = new ArrayBlockingQueue<List<Span>>(queueSize);
         for (int i = 0; i < taskCount; i++) {
@@ -50,7 +55,7 @@ public class HydraMysqlServiceImpl implements HydraService {
                         }
                     }
                 } catch (InterruptedException e) {
-                    //ig
+                    // ig
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -69,6 +74,5 @@ public class HydraMysqlServiceImpl implements HydraService {
     public void setInsertService(InsertService insertService) {
         this.insertService = insertService;
     }
-
 
 }

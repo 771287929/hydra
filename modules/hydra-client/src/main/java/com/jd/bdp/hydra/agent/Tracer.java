@@ -12,25 +12,21 @@ import com.jd.bdp.hydra.agent.support.SampleImp;
 import com.jd.bdp.hydra.agent.support.TraceService;
 
 /**
- * Date: 13-3-19
- * Time: 下午4:14
- * 系统跟踪类(单例)
-  */
+ * Date: 13-3-19 Time: 下午4:14 系统跟踪类(单例)
+ */
 
 public class Tracer {
 
     private static final Logger logger = LoggerFactory.getLogger(Tracer.class);
 
-    //private static Tracer tracer = null;
+    // private static Tracer tracer = null;
 
     private Sampler sampler = new SampleImp();
 
-    private SyncTransfer transfer = null;
-
-    //传递parentSpan
+    // 传递parentSpan
     private ThreadLocal<Span> spanThreadLocal = new ThreadLocal<Span>();
 
-   // TraceService traceService;
+    // TraceService traceService;
 
     private Tracer() {
     }
@@ -47,7 +43,7 @@ public class Tracer {
         spanThreadLocal.set(span);
     }
 
-    //构件Span，参数通过上游接口传递过来
+    // 构件Span，参数通过上游接口传递过来
     public Span genSpan(Long traceId, Long pid, Long id, String spanname, boolean isSample, String serviceId) {
         Span span = new Span();
         span.setId(id);
@@ -59,7 +55,7 @@ public class Tracer {
         return span;
     }
 
-    //构件rootSpan,是否采样
+    // 构件rootSpan,是否采样
     public Span newSpan(String spanname, Endpoint endpoint, String serviceId) {
         boolean s = isSample();
         Span span = new Span();
@@ -68,14 +64,14 @@ public class Tracer {
         span.setSpanName(spanname);
         span.setServiceId(serviceId);
         span.setSample(s);
-//        if (s) {//应用名写入
-//            BinaryAnnotation appname = new BinaryAnnotation();
-//            appname.setKey("dubbo.applicationName");
-//            appname.setValue(transfer.appName().getBytes());
-//            appname.setType("string");
-//            appname.setHost(endpoint);
-//            span.addBinaryAnnotation(appname);
-//        }
+        // if (s) {//应用名写入
+        // BinaryAnnotation appname = new BinaryAnnotation();
+        // appname.setKey("dubbo.applicationName");
+        // appname.setValue(transfer.appName().getBytes());
+        // appname.setType("string");
+        // appname.setHost(endpoint);
+        // span.addBinaryAnnotation(appname);
+        // }
         return span;
     }
 
@@ -83,18 +79,19 @@ public class Tracer {
         return new Endpoint();
     }
 
-    private static class  TraceHolder{
-        static Tracer instance=new Tracer();
+    private static class TraceHolder {
+        static Tracer instance = new Tracer();
     }
+
     public static Tracer getTracer() {
-       return TraceHolder.instance;
+        return TraceHolder.instance;
     }
 
     public void start() throws Exception {
         transfer.start();
     }
 
-    //启动后台消息发送线程
+    // 启动后台消息发送线程
     public static void startTraceWork() {
         try {
             getTracer().start();
@@ -102,7 +99,6 @@ public class Tracer {
             logger.error(e.getMessage());
         }
     }
-
 
     public boolean isSample() {
         return sampler.isSample() && (transfer != null && transfer.isReady());
@@ -116,26 +112,21 @@ public class Tracer {
     }
 
     /**
-     * 主要就是将调用分成四个阶段：
-     * cs:客户端发送记录；
-     * sr:服务端接收记录;
-     * ss:服务端发送记录;
-     * cr:客户端接收记录
+     * 主要就是将调用分成四个阶段： cs:客户端发送记录； sr:服务端接收记录; ss:服务端发送记录; cr:客户端接收记录
      * 
-   
+     * 
      */
-    //构件cs annotation
-    public void clientSendRecord(Span span, Endpoint endpoint, long start,String paras) {
+    // 构件cs annotation
+    public void clientSendRecord(Span span, Endpoint endpoint, long start, String paras) {
         Annotation annotation = new Annotation();
         annotation.setValue(Annotation.CLIENT_SEND);
         annotation.setHost(endpoint);
         annotation.setTimestamp(start);
-        annotation.setParas(paras);//记录rpc请求方法的参数
+        annotation.setParas(paras);// 记录rpc请求方法的参数
         span.addAnnotation(annotation);
     }
 
-
-    //构件cr annotation
+    // 构件cr annotation
     public void clientReceiveRecord(Span span, Endpoint endpoint, long end) {
         Annotation annotation = new Annotation();
         annotation.setValue(Annotation.CLIENT_RECEIVE);
@@ -145,19 +136,19 @@ public class Tracer {
         transfer.syncSend(span);
     }
 
-    //构件sr annotation
-    public void serverReceiveRecord(Span span, Endpoint endpoint, long start,String paras) {
+    // 构件sr annotation
+    public void serverReceiveRecord(Span span, Endpoint endpoint, long start, String paras) {
         Annotation annotation = new Annotation();
         annotation.setValue(Annotation.SERVER_RECEIVE);
         annotation.setHost(endpoint);
         annotation.setTimestamp(start);
-        annotation.setParas(paras);//记录rpc请求方法的参数
-        
+        annotation.setParas(paras);// 记录rpc请求方法的参数
+
         span.addAnnotation(annotation);
         spanThreadLocal.set(span);
     }
 
-    //构件 ss annotation
+    // 构件 ss annotation
     public void serverSendRecord(Span span, Endpoint endpoint, long end) {
         Annotation annotation = new Annotation();
         annotation.setTimestamp(end);
@@ -183,12 +174,13 @@ public class Tracer {
         return transfer.getSpanId();
     }
 
-    /*public void setTraceService(TraceService traceService) {
-        this.traceService = traceService;
-    }*/
+    /*
+     * public void setTraceService(TraceService traceService) {
+     * this.traceService = traceService; }
+     */
+    private SyncTransfer transfer = null;
 
     public void setTransfer(SyncTransfer transfer) {
         this.transfer = transfer;
     }
 }
-

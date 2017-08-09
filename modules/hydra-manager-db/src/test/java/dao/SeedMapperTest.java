@@ -16,18 +16,27 @@
 
 package dao;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.jd.bdp.hydra.mysql.persistent.dao.SeedMapper;
 import com.jd.bdp.hydra.mysql.persistent.entity.SeedData;
-import org.junit.Test;
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 
 /**
- * User: xiangkui
- * Date: 13-4-1
- * Time: 下午1:27
+ * User: xiangkui Date: 13-4-1 Time: 下午1:27
  */
-public class SeedMapperTest extends AbstractDependencyInjectionSpringContextTests {
+@RunWith(SpringJUnit4ClassRunner.class) // 使用junit4进行测试
+@ContextConfiguration(locations = { "classpath:hydra-manager-db.xml" })
+public class SeedMapperTest // extends
+                            // AbstractDependencyInjectionSpringContextTests
+{
     private SeedMapper seedMapper;
 
     public SeedMapper getServerMseeder() {
@@ -38,54 +47,49 @@ public class SeedMapperTest extends AbstractDependencyInjectionSpringContextTest
         this.seedMapper = seedMseeder;
     }
 
-    @Override
-    protected String[] getConfigLocations() {
-        String[] location = {"classpath:/hydra-manager-db.xml"};
-        return location;
-    }
+    /*
+     * @Override protected String[] getConfigLocations() { String[] location =
+     * {"classpath:/hydra-manager-db.xml"}; return location; }
+     */
 
     /**
-     * # 测试数据库 #
-     * 测试前提：所操作的数据库为空
-     * 测试策略：
-     * 1:增加一个实体 Entity，查询确认添加成功
-     * 2：修改这个实体Entity,查询这个实体，确认修改成功
-     * 3：删除Entity，查询，确认为null
+     * # 测试数据库 # 测试前提：所操作的数据库为空 测试策略： 1:增加一个实体 Entity，查询确认添加成功
+     * 2：修改这个实体Entity,查询这个实体，确认修改成功 3：删除Entity，查询，确认为null
      *
      * @throws Exception
      */
     @Test
     public void testDataBaseOption() throws Exception {
-        //define option-entity and query-entiry
+        // define option-entity and query-entiry
         SeedData seedData = new SeedData();
         seedData.setValue(0);
         SeedData queryPara = null;
-        //add entity
+        // add entity
         Integer optionId;
         seedMapper.addSeed(seedData);
         optionId = seedData.getId();
         seedData.setId(optionId);
-        //1:query entity
+        // 1:query entity
         queryPara = seedMapper.getOneSeed(optionId);
         assertNotNull(queryPara);
         assertEquals(seedData, queryPara);
-        //modify entity
+        // modify entity
         seedData.setValue(1);
         seedMapper.updateSeed(seedData);
-        //2:query entity
+        // 2:query entity
         queryPara = seedMapper.getOneSeed(seedData.getId());
         assertNotNull(queryPara);
         assertEquals(seedData, queryPara);
-        //delete entity
+        // delete entity
         seedMapper.deleteSeed(seedData);
-        //3:query entity
+        // 3:query entity
         queryPara = seedMapper.getOneSeed(seedData.getId());
         assertNull(queryPara);
     }
 
     @Test
     public void testGetMaxValue() throws Exception {
-        //define option-entity and query-entiry
+        // define option-entity and query-entiry
         SeedData seedData = new SeedData();
         seedData.setValue(0);
         Integer max_value = seedMapper.getMaxSeedValue();
@@ -100,14 +104,14 @@ public class SeedMapperTest extends AbstractDependencyInjectionSpringContextTest
 
     @Test
     public void testHasSeed() throws Exception {
-        //define option-entity and query-entiry
+        // define option-entity and query-entiry
         SeedData seedData = new SeedData();
         seedData.setValue(0);
-        //add entity
+        // add entity
         seedMapper.addSeed(seedData);
-        //1:query entity
+        // 1:query entity
         assertTrue(seedMapper.hasSeed(0));
-        //delete entity
+        // delete entity
         seedMapper.deleteSeed(seedData);
     }
 

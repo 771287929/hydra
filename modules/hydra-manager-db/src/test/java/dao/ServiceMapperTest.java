@@ -16,81 +16,82 @@
 
 package dao;
 
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.jd.bdp.hydra.mysql.persistent.dao.AppMapper;
 import com.jd.bdp.hydra.mysql.persistent.dao.ServiceMapper;
 import com.jd.bdp.hydra.mysql.persistent.entity.AppPara;
 import com.jd.bdp.hydra.mysql.persistent.entity.ServicePara;
-import org.junit.Test;
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 
 /**
- * User: xiangkui
- * Date: 13-4-1
- * Time: 下午1:27
+ * User: xiangkui Date: 13-4-1 Time: 下午1:27
  */
-public class ServiceMapperTest extends AbstractDependencyInjectionSpringContextTests {
+@RunWith(SpringJUnit4ClassRunner.class) // 使用junit4进行测试
+@ContextConfiguration(locations = { "classpath:hydra-manager-db.xml" })
+public class ServiceMapperTest // extends
+                               // AbstractDependencyInjectionSpringContextTests
+{
 
-    @Override
-    protected String[] getConfigLocations() {
-        String[] location = {"classpath:/hydra-manager-db.xml"};
-        return location;
-    }
-
+    /*
+     * @Override protected String[] getConfigLocations() { String[] location =
+     * {"classpath:/hydra-manager-db.xml"}; return location; }
+     */
 
     /**
-     * # 测试数据库 #
-     * 测试前提：所操作的数据库为空
-     * 测试策略：
-     * 1:增加一个实体 Entity，查询确认添加成功
-     * 2：修改这个实体Entity,查询这个实体，确认修改成功
-     * 3：删除Entity，查询，确认为null
+     * # 测试数据库 # 测试前提：所操作的数据库为空 测试策略： 1:增加一个实体 Entity，查询确认添加成功
+     * 2：修改这个实体Entity,查询这个实体，确认修改成功 3：删除Entity，查询，确认为null
+     * 
      * @throws Exception
      */
     @Test
-    public void testDataBaseOption()throws Exception{
+    public void testDataBaseOption() throws Exception {
         try {
             AppPara app = new AppPara();
             app.setName("myApp");
             appMapper.addApp(app);
 
-            //define option-entity and query-entiry
-            ServicePara servicePara=new ServicePara();
+            // define option-entity and query-entiry
+            ServicePara servicePara = new ServicePara();
             servicePara.setId("1");
             servicePara.setName("com.jd.car");
             servicePara.setAppId(app.getId());
-            ServicePara queryPara=null;
-            //add entity
+            ServicePara queryPara = null;
+            // add entity
             serviceMapper.addService(servicePara);
-            //1:query entity
-            queryPara=serviceMapper.getOneService(servicePara.getId());
+            // 1:query entity
+            queryPara = serviceMapper.getOneService(servicePara.getId());
             assertNotNull(queryPara);
             assertEquals(servicePara, queryPara);
-            //modify entity
+            // modify entity
             servicePara.setName("com.jd.payment");
 
             serviceMapper.updateService(servicePara);
-            //2:query entity
-            queryPara=serviceMapper.getOneService(servicePara.getId());
+            // 2:query entity
+            queryPara = serviceMapper.getOneService(servicePara.getId());
             assertNotNull(queryPara);
             assertEquals(servicePara, queryPara);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            //delete entity
+        } finally {
+            // delete entity
             try {
                 serviceMapper.deleteAll();
                 appMapper.deleteAll();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
     }
 
-    //测试根据name和appId查找
+    // 测试根据name和appId查找
     @Test
-    public void testFindByName(){
+    public void testFindByName() {
         try {
             AppPara app = new AppPara();
             app.setName("myApp");
@@ -124,10 +125,10 @@ public class ServiceMapperTest extends AbstractDependencyInjectionSpringContextT
             assertEquals(id1, s1.getId());
             assertEquals(id2, s2.getId());
             assertEquals(appId, s1.getAppId());
-        }catch (Exception e){
-           e.printStackTrace();
-        }finally {
-            //最后删除所有的测试数据
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 最后删除所有的测试数据
             serviceMapper.deleteAll();
             appMapper.deleteAll();
         }

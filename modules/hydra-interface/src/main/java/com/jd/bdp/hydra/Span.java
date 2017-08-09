@@ -5,17 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Date: 13-3-18
- * Time: 下午3:29
+ * Date: 13-3-18 Time: 下午3:29
  */
 public class Span implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 2705272415955579L;
-	private Long traceId;
+     * 
+     */
+    private static final long serialVersionUID = 2705272415955579L;
+    private Long traceId;
     private Long id;
-    private Long parentId; //optional
+    private Long parentId; // optional
     private String spanName;
     private String serviceId;
     private List<Annotation> annotations;
@@ -30,20 +29,18 @@ public class Span implements Serializable {
         isSample = sample;
     }
 
-    public Span(){
+    public Span() {
         annotations = new ArrayList<Annotation>();
         binaryAnnotations = new ArrayList<BinaryAnnotation>();
     }
 
-
-    public void addAnnotation(Annotation a){
+    public void addAnnotation(Annotation a) {
         annotations.add(a);
     }
 
-    public void addBinaryAnnotation(BinaryAnnotation a){
+    public void addBinaryAnnotation(BinaryAnnotation a) {
         binaryAnnotations.add(a);
     }
-
 
     public Long getTraceId() {
         return traceId;
@@ -95,16 +92,9 @@ public class Span implements Serializable {
 
     @Override
     public String toString() {
-        return "Span{" +
-                "traceId=" + traceId +
-                ", id=" + id +
-                ", parentId=" + parentId +
-                ", serviceId=" + serviceId +
-                ", spanName='" + spanName + '\'' +
-                ", annotations=" + annotations +
-                ", binaryAnnotations=" + binaryAnnotations +
-                ", isSample=" + isSample +
-                '}';
+        return "Span{" + "traceId=" + traceId + ", id=" + id + ", parentId=" + parentId + ", serviceId=" + serviceId
+                + ", spanName='" + spanName + '\'' + ", annotations=" + annotations + ", binaryAnnotations="
+                + binaryAnnotations + ", isSample=" + isSample + '}';
     }
 
     public String getServiceId() {

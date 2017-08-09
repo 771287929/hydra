@@ -16,21 +16,28 @@
 
 package dao;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import com.jd.bdp.hydra.mysql.persistent.dao.ServiceIdGenMapper;
 import com.jd.bdp.hydra.mysql.persistent.entity.ServiceIdGen;
-import org.junit.Test;
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 
 /**
- * User: biandi
- * Date: 13-4-16
- * Time: 上午10:34
+ * User: biandi Date: 13-4-16 Time: 上午10:34
  */
-public class ServiceIdGenMapperTest extends AbstractDependencyInjectionSpringContextTests {
-
+@RunWith(SpringJUnit4ClassRunner.class) // 使用junit4进行测试
+@ContextConfiguration(locations = { "classpath:hydra-manager-db.xml" })
+public class ServiceIdGenMapperTest // extends
+                                    // AbstractDependencyInjectionSpringContextTests
+{
 
     @Test
-    public void testGet(){
+    public void testGet() {
         ServiceIdGen serviceIdGen = serviceIdGenMapper.getServiceIdGen();
         assertNotNull(serviceIdGen);
         assertNotNull(serviceIdGen.getMaxId());
@@ -49,17 +56,15 @@ public class ServiceIdGenMapperTest extends AbstractDependencyInjectionSpringCon
         assertTrue(serviceIdGen.getMaxId() > tempId);
     }
 
-    @Override
-    protected String[] getConfigLocations() {
-        String[] location = {"classpath:hydra-manager-db.xml"};
-        return location;
-    }
+    /*
+     * @Override protected String[] getConfigLocations() { String[] location =
+     * {"classpath:hydra-manager-db.xml"}; return location; }
+     */
 
     private ServiceIdGenMapper serviceIdGenMapper;
 
     public void setServiceIdGenMapper(ServiceIdGenMapper serviceIdGenMapper) {
         this.serviceIdGenMapper = serviceIdGenMapper;
     }
-
 
 }
