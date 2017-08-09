@@ -36,12 +36,12 @@
         <!--针对hydra-mysql相关接口进行测试-->
         <dependency>
             <groupId>com.jd.bdp</groupId>
-            <artifactId>hydra-mysql</artifactId>
+            <artifactId>hydra-store-mysql</artifactId>
         </dependency>
         <!--针对hydra-hbase的测试-->
         <dependency>
             <groupId>com.jd.bdp</groupId>
-            <artifactId>hydra-hbase</artifactId>
+            <artifactId>hydra-store-hbase</artifactId>
         </dependency>
     </dependencies>
 

@@ -18,7 +18,7 @@ public class LeaderServiceImpl implements LeaderService {
 
     @Override
     public Map<String, String> registerClient(String name, List<String> services) {
-      //  long startTime=System.currentTimeMillis();
+        long startTime=System.currentTimeMillis();
         HashMap<String, String> map = new HashMap<String, String>();
         map.put("seed", seedService.getSeed().toString());
         map.put(name, appService.getAppId(name).toString());
