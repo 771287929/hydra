@@ -31,10 +31,14 @@ CREATE TABLE `TB_PARA_SERVICE_ID_GEN` (
   PRIMARY KEY (`MAX_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
 #初始化生成策略数据，serviceId由head+max_id两部分组成max_id和head分别自增。
 #head自增至26之后重置为0（为了配合hbase分区策略，hbase分多少个区，则max_head为多少）
 #max_id自增值9999后后重置为0
 INSERT INTO `TB_PARA_SERVICE_ID_GEN` VALUES (0, 0, 26, 10000);
+-------以上表用于manager
+
 
 #annotation
 CREATE TABLE `annotation` (
@@ -49,7 +53,7 @@ CREATE TABLE `annotation` (
   `traceId` bigint(128) DEFAULT NULL,
   `service` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=217122 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 #span
 CREATE TABLE `span` (
@@ -60,7 +64,7 @@ CREATE TABLE `span` (
   `spanId` bigint(20) DEFAULT NULL,
   `service` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53365 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 #trace
 CREATE TABLE `trace` (
@@ -70,4 +74,4 @@ CREATE TABLE `trace` (
   `service` varchar(1024) CHARACTER SET utf8 DEFAULT NULL,
   `time` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16924 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;

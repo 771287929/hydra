@@ -18,10 +18,10 @@
             <groupId>com.jd.bdp</groupId>
             <artifactId>hydra-interface</artifactId>
         </dependency>
-        <dependency>
+   <!--      <dependency>
             <groupId>com.jd.bdp</groupId>
             <artifactId>hydra-manager-db</artifactId>
-        </dependency>
+        </dependency> -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

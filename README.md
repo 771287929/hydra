@@ -14,3 +14,11 @@ Hydra自身提供跟踪数据展现功能，基于angularJS和D3.js。
 刘宇：yfliuyu@jd.com     项奎：xiangkui@jd.com     边迪:biandi@jd.com
 
 
+
+
+##重构
+
+对于hydra重新梳理代码结构，以应用于现有的框架系统
+
+合并hydra-manager-db项目至hydra-manager项目中，删除hydra-manager-db;
+
