@@ -2,14 +2,11 @@ package com.jd.bdp.hydra.agent;
 
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
-import com.alibaba.dubbo.rpc.Invocation;
-import com.alibaba.dubbo.rpc.RpcInvocation;
 import com.jd.bdp.hydra.Annotation;
 import com.jd.bdp.hydra.BinaryAnnotation;
 import com.jd.bdp.hydra.Endpoint;
 import com.jd.bdp.hydra.Span;
 import com.jd.bdp.hydra.agent.support.SampleImp;
-import com.jd.bdp.hydra.agent.support.TraceService;
 
 /**
  * Date: 13-3-19 Time: 下午4:14 系统跟踪类(单例)

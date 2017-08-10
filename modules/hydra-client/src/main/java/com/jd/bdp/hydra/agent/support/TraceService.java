@@ -1,8 +1,8 @@
 package com.jd.bdp.hydra.agent.support;
 
-
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +14,7 @@ import com.jd.bdp.hydra.dubbomonitor.HydraService;
 import com.jd.bdp.hydra.dubbomonitor.LeaderService;
 
 /**
- * Date: 13-3-27
- * Time: 上午10:57
+ * Date: 13-3-27 Time: 上午10:57
  */
 public class TraceService implements RegisterService, CollectorService {
 
@@ -23,7 +22,7 @@ public class TraceService implements RegisterService, CollectorService {
 
     private LeaderService leaderService;
     private HydraService hydraService;
-    private Map<String, String> registerInfo;
+    private ConcurrentHashMap<String /* serviceName */, String/* serviceId */> serviceRegistInfo = new ConcurrentHashMap<String, String>();
     public static final String APP_NAME = "applicationName";
     public static final String SEED = "seed";
     private boolean isRegister = false;
@@ -34,7 +33,7 @@ public class TraceService implements RegisterService, CollectorService {
 
     @Override
     public void sendSpan(List<Span> spanList) {
-        //fixme try-catch性能影响？
+        // fixme try-catch性能影响？
         try {
             hydraService.push(spanList);
         } catch (Exception e) {
@@ -44,20 +43,23 @@ public class TraceService implements RegisterService, CollectorService {
 
     @Override
     public boolean registerService(String name, List<String> services) {
-       // logger.info(name + " " + services);
+        // logger.info(name + " " + services);
+        Map<String, String> registerInfo2 = null;
         try {
-            this.registerInfo = leaderService.registerClient(name, services);
+            registerInfo2 = leaderService.registerClient(name, services);
         } catch (Exception e) {
             logger.warn("[Hydra] Client global config-info cannot regist into the hydra system");
         }
-        if (registerInfo != null) {
+        if (registerInfo2 != null) {
             logger.info("[Hydra] Global registry option is ok!");
             isRegister = true;
+            serviceRegistInfo.putAll(registerInfo2);
+
         }
         return isRegister;
     }
 
-    /*更新注册信息*/
+    /* 更新注册信息 */
     @Override
     public boolean registerService(String appName, String serviceName) {
         logger.info(appName + " " + serviceName);
@@ -68,8 +70,8 @@ public class TraceService implements RegisterService, CollectorService {
             logger.warn("[Hydra] client cannot regist service <" + serviceName + "> into the hydra system");
         }
         if (serviceId != null) {
-            logger.info("[Hydra] Registry ["+serviceName+"] option is ok!");
-            registerInfo.put(serviceName, serviceId); //更新本地注册信息
+            logger.info("[Hydra] Registry [" + serviceName + "] option is ok!");
+            serviceRegistInfo.put(serviceName, serviceId); // 更新本地注册信息
             return true;
         } else
             return false;
@@ -92,8 +94,8 @@ public class TraceService implements RegisterService, CollectorService {
     }
 
     public String getServiceId(String service) {
-        if (isRegister && registerInfo.containsKey(service))
-            return registerInfo.get(service);
+        if (isRegister && serviceRegistInfo.containsKey(service))
+            return serviceRegistInfo.get(service);
         else
             return null;
     }
@@ -101,7 +103,7 @@ public class TraceService implements RegisterService, CollectorService {
     public Long getSeed() {
         String s = null;
         if (isRegister) {
-            s = registerInfo.get(SEED);
+            s = serviceRegistInfo.get(SEED);
             return Long.valueOf(s);
         }
         return null;

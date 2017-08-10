@@ -25,7 +25,7 @@ public class DefaultSyncTransfer implements SyncTransfer {
 	// serviceName isReady
 	private volatile boolean isReady = false; // 是否获得种子等全局注册信息
 
-	private ConcurrentHashMap<String, Boolean> isServiceReady = new ConcurrentHashMap<String, Boolean>();
+	private ConcurrentHashMap<String/*serviceName*/, Boolean/*isregister*/> isServiceReady = new ConcurrentHashMap<String, Boolean>();
 
 	private GenerateTraceId generateTraceId = new GenerateTraceId(0L);
 
@@ -54,7 +54,7 @@ public class DefaultSyncTransfer implements SyncTransfer {
 		this.flushSize = c.getFlushSize() == null ? 1024L : c.getFlushSize();
 		this.waitTime = c.getDelayTime() == null ? 60000L : c.getDelayTime();
 		this.queue = new ArrayBlockingQueue<Span>(c.getQueueSize());
-		this.spansCache = new ArrayList<Span>();
+		this.spansCache = new ArrayList<Span>();//无限数组
 		this.executors = Executors.newSingleThreadScheduledExecutor();
 		this.task = new TransferTask();
 	}
