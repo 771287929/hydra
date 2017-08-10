@@ -14,28 +14,32 @@ public class Annotation implements Serializable {
     public static final String CLIENT_RECEIVE = "cr";
     public static final String SERVER_SEND = "ss";
     public static final String SERVER_RECEIVE = "sr";
-    private String value;
+    
+    private String key;
+    private String value; //增加参数，记录rpc方法调用的参数
     private Endpoint host;
     private Long timestamp;
     private Integer duration;
 
-    private String paras;// 增加参数，记录rpc方法调用的参数
+   // private String paras;// 增加参数，记录rpc方法调用的参数
 
-    public String getParas() {
-        return paras;
-    }
-
-    public void setParas(String paras) {
-        this.paras = paras;
-    }
+   
 
     public Annotation() {
 
     }
 
-    public Annotation(Long timestamp, String value, Endpoint host) {
+    public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public Annotation(Long timestamp, String key, Endpoint host) {
         this.timestamp = timestamp;
-        this.value = value;
+        this.key = key;
         this.host = host;
     }
 
@@ -73,8 +77,7 @@ public class Annotation implements Serializable {
 
     @Override
     public String toString() {
-        return "Annotation{" + "timestamp=" + timestamp + ", value='" + value + '\'' + ", host=" + host + ", duration="
-                + duration + '}';
+        return "Annotation{" + "timestamp=" + timestamp + ", key='" + key + '\'' + ", host=" + host + ", duration=" + duration + ", value=" + value+"}";
     }
 
     @Override
@@ -92,7 +95,7 @@ public class Annotation implements Serializable {
             return false;
         if (!timestamp.equals(that.timestamp))
             return false;
-        if (!value.equals(that.value))
+        if (!key.equals(that.key))
             return false;
 
         return true;
@@ -101,7 +104,7 @@ public class Annotation implements Serializable {
     @Override
     public int hashCode() {
         int result = timestamp.hashCode();
-        result = 31 * result + value.hashCode();
+        result = 31 * result + key.hashCode();
         result = 31 * result + host.hashCode();
         result = 31 * result + duration.hashCode();
         return result;

@@ -113,7 +113,8 @@ public class QueryServiceImpl implements QueryService {
 
     //这里判断如果某个span没有收集全4个annotation，则判定为不可用，页面不展示图
     private boolean isSpanAvailable(JSONObject span) {
-        return span.getJSONArray("annotations").size() == 4;
+       // return span.getJSONArray("annotations").size() == 4;
+    	return true;
     }
 
 

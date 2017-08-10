@@ -147,10 +147,10 @@ public class HydraFilter implements Filter {
 
     private void invokerAfter(Invocation invocation, Endpoint endpoint, Span span, long end, boolean isConsumerSide) {
         if (isConsumerSide && span.isSample()) {
-            tracer.clientReceiveRecord(span, endpoint, end); // 客户端接收记录
+            tracer.clientReceiveRecord(span, endpoint, end,invocation.toString()); // 客户端接收记录
         } else {
             if (span.isSample()) {
-                tracer.serverSendRecord(span, endpoint, end); // 服务端发送记录
+                tracer.serverSendRecord(span, endpoint, end,invocation.toString()); // 服务端发送记录
             }
             tracer.removeParentSpan();
         }

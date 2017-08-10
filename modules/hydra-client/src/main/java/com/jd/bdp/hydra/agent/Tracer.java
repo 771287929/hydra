@@ -119,19 +119,20 @@ public class Tracer {
     // 构件cs annotation
     public void clientSendRecord(Span span, Endpoint endpoint, long start, String paras) {
         Annotation annotation = new Annotation();
-        annotation.setValue(Annotation.CLIENT_SEND);
+        annotation.setKey(Annotation.CLIENT_SEND);
         annotation.setHost(endpoint);
         annotation.setTimestamp(start);
-        annotation.setParas(paras);// 记录rpc请求方法的参数
+        annotation.setValue(paras);// 记录rpc请求方法的参数
         span.addAnnotation(annotation);
     }
 
     // 构件cr annotation
-    public void clientReceiveRecord(Span span, Endpoint endpoint, long end) {
+    public void clientReceiveRecord(Span span, Endpoint endpoint, long end, String paras) {
         Annotation annotation = new Annotation();
-        annotation.setValue(Annotation.CLIENT_RECEIVE);
+        annotation.setKey(Annotation.CLIENT_RECEIVE);
         annotation.setHost(endpoint);
         annotation.setTimestamp(end);
+        annotation.setValue(paras);// 记录rpc请求方法的参数
         span.addAnnotation(annotation);
         transfer.syncSend(span);
     }
@@ -139,21 +140,22 @@ public class Tracer {
     // 构件sr annotation
     public void serverReceiveRecord(Span span, Endpoint endpoint, long start, String paras) {
         Annotation annotation = new Annotation();
-        annotation.setValue(Annotation.SERVER_RECEIVE);
+        annotation.setKey(Annotation.SERVER_RECEIVE);
         annotation.setHost(endpoint);
         annotation.setTimestamp(start);
-        annotation.setParas(paras);// 记录rpc请求方法的参数
+        annotation.setValue(paras);// 记录rpc请求方法的参数
 
         span.addAnnotation(annotation);
         spanThreadLocal.set(span);
     }
 
     // 构件 ss annotation
-    public void serverSendRecord(Span span, Endpoint endpoint, long end) {
+    public void serverSendRecord(Span span, Endpoint endpoint, long end, String paras) {
         Annotation annotation = new Annotation();
         annotation.setTimestamp(end);
         annotation.setHost(endpoint);
-        annotation.setValue(Annotation.SERVER_SEND);
+        annotation.setKey(Annotation.SERVER_SEND);
+        annotation.setValue(paras);// 记录rpc请求方法的参数
         span.addAnnotation(annotation);
         transfer.syncSend(span);
     }

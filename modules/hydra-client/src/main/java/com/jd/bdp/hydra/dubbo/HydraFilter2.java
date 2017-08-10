@@ -86,9 +86,9 @@ public class HydraFilter2 implements Filter {
 					if (spanId == null) {
 						spanId = tracer.genSpanId();
 					}
-					if (parentId == null) {
-						parentId = traceId;
-					}
+					/*if (parentId == null) {
+						parentId = spanId;
+					}*/
 					boolean isSample = (traceId != null);
 					span = tracer.genSpan(traceId, parentId, spanId, context.getMethodName(), isSample, serviceId); // rest服务生成的
 																													// span
@@ -151,10 +151,10 @@ public class HydraFilter2 implements Filter {
 
 	private void invokerAfter(Invocation invocation, Endpoint endpoint, Span span, long end, boolean isConsumerSide) {
 		if (isConsumerSide && span.isSample()) {
-			tracer.clientReceiveRecord(span, endpoint, end); // 客户端接收记录
+			tracer.clientReceiveRecord(span, endpoint, end,invocation.toString()); // 客户端接收记录
 		} else {
 			if (span.isSample()) {
-				tracer.serverSendRecord(span, endpoint, end); // 服务端发送记录
+				tracer.serverSendRecord(span, endpoint, end,invocation.toString()); // 服务端发送记录
 			}
 			tracer.removeParentSpan();
 		}

@@ -37,12 +37,18 @@ public class Absannotation {
     public Absannotation(Annotation annotation, Span span){
         this.spanId = span.getId();
         this.traceId = span.getTraceId();
-        this.key = annotation.getValue();
+        this.key = annotation.getKey();
         this.timestamp = annotation.getTimestamp();
         this.duration = annotation.getDuration();
         this.ip = annotation.getHost().getIp();
         this.port = annotation.getHost().getPort();
+        this.value=annotation.getValue();
         this.service = span.getServiceId();
+        
+        if(value!=null&&value.length()>2048){
+        	value=value.substring(0, 2048);
+        }
+       
     }
 
     @Override

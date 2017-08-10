@@ -37,7 +37,7 @@ CREATE TABLE `TB_PARA_SERVICE_ID_GEN` (
 #head自增至26之后重置为0（为了配合hbase分区策略，hbase分多少个区，则max_head为多少）
 #max_id自增值9999后后重置为0
 INSERT INTO `TB_PARA_SERVICE_ID_GEN` VALUES (0, 0, 26, 10000);
--------以上表用于manager
+#以上表用于manager
 
 
 #annotation

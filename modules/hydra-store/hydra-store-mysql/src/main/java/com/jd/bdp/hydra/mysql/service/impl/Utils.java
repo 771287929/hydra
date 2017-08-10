@@ -17,7 +17,7 @@ public class Utils {
         List<Annotation> alist = span.getAnnotations();
         boolean isfirst = false;
         for(Annotation a : alist){
-            if(StringUtils.endsWithIgnoreCase("cs", a.getValue())){
+            if(StringUtils.endsWithIgnoreCase("cs", a.getKey())){
                 isfirst = true;
             }
         }
@@ -26,7 +26,7 @@ public class Utils {
 
     public static Annotation getCsAnnotation(List<Annotation> alist){
         for(Annotation a : alist){
-            if(StringUtils.endsWithIgnoreCase("cs", a.getValue())){
+            if(StringUtils.endsWithIgnoreCase("cs", a.getKey())){
                 return a;
             }
         }
@@ -35,7 +35,7 @@ public class Utils {
 
     public static Annotation getCrAnnotation(List<Annotation> alist){
         for(Annotation a : alist){
-            if(StringUtils.endsWithIgnoreCase("cr",a.getValue())){
+            if(StringUtils.endsWithIgnoreCase("cr",a.getKey())){
                 return a;
             }
         }
@@ -44,5 +44,24 @@ public class Utils {
 
     public static boolean isRoot(Span span) {
         return span.getParentId() == null;
+    }
+    
+    
+    public static Annotation getSsAnnotation(List<Annotation> alist){
+        for(Annotation a : alist){
+            if(StringUtils.endsWithIgnoreCase("ss", a.getKey())){
+                return a;
+            }
+        }
+        return null;
+    }
+    
+    public static Annotation getSrAnnotation(List<Annotation> alist){
+        for(Annotation a : alist){
+            if(StringUtils.endsWithIgnoreCase("sr", a.getKey())){
+                return a;
+            }
+        }
+        return null;
     }
 }
