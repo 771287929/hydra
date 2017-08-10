@@ -5,147 +5,143 @@ import com.jd.bdp.hydra.BinaryAnnotation;
 import com.jd.bdp.hydra.Span;
 
 /**
- * Date: 13-5-7
- * Time: 上午10:54
+ * Date: 13-5-7 Time: 上午10:54
  */
 public class Absannotation {
-    private Integer id;
-    private String key;
-    private String value;
-    private String ip;
-    private Integer port;
-    private String service;
-    private Long timestamp;
-    private Integer duration;
-    private Long spanId;
-    private Long traceId;
+	private static final int Value_Length = 2048;
+	private Integer id;
+	private String key;
+	private String value;
+	private String ip;
+	private Integer port;
+	private String service;
+	private Long timestamp;
+	private Integer duration;
+	private Long spanId;
+	private Long traceId;
 
-    public Absannotation(){
+	public Absannotation() {
 
-    }
+	}
 
-    public Absannotation(BinaryAnnotation binaryAnnotation, Span span){
-        this.spanId = span.getId();
-        this.traceId = span.getTraceId();
-        this.key = binaryAnnotation.getKey();
-        this.ip = binaryAnnotation.getHost().getIp();
-        this.value = new String(binaryAnnotation.getValue());
-        this.port = binaryAnnotation.getHost().getPort();
-        this.service = span.getServiceId();
-    }
+	public Absannotation(BinaryAnnotation binaryAnnotation, Span span) {
+		this.spanId = span.getId();
+		this.traceId = span.getTraceId();
+		this.key = binaryAnnotation.getKey();
+		this.ip = binaryAnnotation.getHost().getIp();
+		this.value = new String(binaryAnnotation.getValue());
+		this.port = binaryAnnotation.getHost().getPort();
+		this.service = span.getServiceId();
+		if (value != null && value.length() > Value_Length) {
+			value = value.substring(0, Value_Length);
+		}
 
-    public Absannotation(Annotation annotation, Span span){
-        this.spanId = span.getId();
-        this.traceId = span.getTraceId();
-        this.key = annotation.getKey();
-        this.timestamp = annotation.getTimestamp();
-        this.duration = annotation.getDuration();
-        this.ip = annotation.getHost().getIp();
-        this.port = annotation.getHost().getPort();
-        this.value=annotation.getValue();
-        this.service = span.getServiceId();
-        
-        if(value!=null&&value.length()>2048){
-        	value=value.substring(0, 2048);
-        }
-       
-    }
+	}
 
-    @Override
-    public String toString() {
-        return "Absannotation{" +
-                "id=" + id +
-                ", key='" + key + '\'' +
-                ", value='" + value + '\'' +
-                ", ip='" + ip + '\'' +
-                ", port=" + port +
-                ", service='" + service + '\'' +
-                ", timestamp='" + timestamp + '\'' +
-                ", duration=" + duration +
-                ", spanId='" + spanId + '\'' +
-                ", traceId='" + traceId + '\'' +
-                '}';
-    }
+	public Absannotation(Annotation annotation, Span span) {
+		this.spanId = span.getId();
+		this.traceId = span.getTraceId();
+		this.key = annotation.getKey();
+		this.timestamp = annotation.getTimestamp();
+		this.duration = annotation.getDuration();
+		this.ip = annotation.getHost().getIp();
+		this.port = annotation.getHost().getPort();
+		this.value = annotation.getValue();
+		this.service = span.getServiceId();
 
-    public Integer getId() {
-        return id;
-    }
+		if (value != null && value.length() > Value_Length) {
+			value = value.substring(0, Value_Length);
+		}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	}
 
-    public String getKey() {
-        return key;
-    }
+	@Override
+	public String toString() {
+		return "Absannotation{" + "id=" + id + ", key='" + key + '\''
+				+ ", value='" + value + '\'' + ", ip='" + ip + '\'' + ", port="
+				+ port + ", service='" + service + '\'' + ", timestamp='"
+				+ timestamp + '\'' + ", duration=" + duration + ", spanId='"
+				+ spanId + '\'' + ", traceId='" + traceId + '\'' + '}';
+	}
 
-    public void setKey(String key) {
-        this.key = key;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+	public String getKey() {
+		return key;
+	}
 
-    public String getIp() {
-        return ip;
-    }
+	public void setKey(String key) {
+		this.key = key;
+	}
 
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
+	public String getValue() {
+		return value;
+	}
 
-    public Integer getPort() {
-        return port;
-    }
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    public void setPort(Integer port) {
-        this.port = port;
-    }
+	public String getIp() {
+		return ip;
+	}
 
-    public String getService() {
-        return service;
-    }
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
 
-    public void setService(String service) {
-        this.service = service;
-    }
+	public Integer getPort() {
+		return port;
+	}
 
-    public Long getTimestamp() {
-        return timestamp;
-    }
+	public void setPort(Integer port) {
+		this.port = port;
+	}
 
-    public void setTimestamp(Long timestamp) {
-        this.timestamp = timestamp;
-    }
+	public String getService() {
+		return service;
+	}
 
-    public Integer getDuration() {
-        return duration;
-    }
+	public void setService(String service) {
+		this.service = service;
+	}
 
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
+	public Long getTimestamp() {
+		return timestamp;
+	}
 
-    public Long getSpanId() {
-        return spanId;
-    }
+	public void setTimestamp(Long timestamp) {
+		this.timestamp = timestamp;
+	}
 
-    public void setSpanId(Long spanId) {
-        this.spanId = spanId;
-    }
+	public Integer getDuration() {
+		return duration;
+	}
 
-    public Long getTraceId(){
-        return this.traceId;
-    }
+	public void setDuration(Integer duration) {
+		this.duration = duration;
+	}
 
-    public void setTraceId(Long traceId) {
-        this.traceId = traceId;
-    }
+	public Long getSpanId() {
+		return spanId;
+	}
 
+	public void setSpanId(Long spanId) {
+		this.spanId = spanId;
+	}
+
+	public Long getTraceId() {
+		return this.traceId;
+	}
+
+	public void setTraceId(Long traceId) {
+		this.traceId = traceId;
+	}
 
 }
