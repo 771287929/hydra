@@ -31,7 +31,7 @@ public class SeedServiceImpl implements SeedService {
 
     private static final Logger log = LoggerFactory.getLogger(SeedServiceImpl.class);
 
-    private static Integer MAX_STEP = 0xffff;
+    private static Integer MAX_STEP = 0xffff; //65535
 
     /**
      * 派发一个seed字串
@@ -39,7 +39,7 @@ public class SeedServiceImpl implements SeedService {
      * @return seed串  null表示无效
      */
     public synchronized Long getSeed() {
-        Long result = null;
+/*        Long result = null;
         try {
             SeedData tempSeed = seedMapper.findTheSeed();
             if (tempSeed != null) {
@@ -65,6 +65,38 @@ public class SeedServiceImpl implements SeedService {
             }
             return result;
         }
+*/
+        
+        Long result = null;
+        try {
+            SeedData tempSeed = seedMapper.findTheSeed();
+            if (tempSeed != null) {
+                int plusId  = (tempSeed.getValue() + 1)%MAX_STEP;
+                tempSeed.setValue(plusId); //持久
+                seedMapper.updateSeed(tempSeed);
+                result = Long.valueOf(plusId);
+             
+            } else {//对应行 数据位null 尝试插入一条数据
+                SeedData insertData = new SeedData();
+                insertData.setValue(1);
+                seedMapper.addSeed(insertData);
+                result = insertData.getValue().longValue();
+             
+            }
+            
+            return result;
+        } catch (Exception e) {
+            log.error("seed persistent into the database occur error,will use default seed");
+            result=0L;
+            return result;
+            //throw new RuntimeException("get seed accur error",e.getCause());
+        }/* finally {
+            if (result != null && result >= MAX_STEP) {
+                log.error("seed has bean used over! please insure the stability of the system~");
+                result = 1L;
+            }
+            return result;
+        }*/
 
 
     }
