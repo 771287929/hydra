@@ -43,6 +43,10 @@ public class HydraFilter2 implements Filter {
 
     // 调用过程拦截
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
+        if(tracer==null){ //空指针处理
+            logger.debug("tracer is null,this request doesnot be traced by hydra filer");
+            return invoker.invoke(invocation);
+        }
         // 异步获取serviceId，没获取到不进行采样
         String serviceId = tracer.getServiceId(RpcContext.getContext().getUrl().getServiceInterface());
         if (serviceId == null) {
