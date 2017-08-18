@@ -5,7 +5,6 @@ package com.jd.bdp.hydra.dubbo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.extension.Activate;

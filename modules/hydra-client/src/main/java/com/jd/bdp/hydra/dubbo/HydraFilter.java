@@ -74,14 +74,6 @@ public class HydraFilter implements Filter {
                 if (span1 == null) { // 为rootSpan
                     span = tracer.newSpan(context.getMethodName(), endpoint, serviceId);// 生成root
                                                                                         // Span
-
-                    if (RpcContext.getContext().getAttachment(TracerUtils.TID) != null) {
-                        try {
-                            Long traceId = Long.valueOf(RpcContext.getContext().getAttachment(TracerUtils.TID));
-                            span.setTraceId(traceId);
-                        } catch (Exception e) {
-                        }
-                    } //增加前端传过来的traceId逻辑
                 } else {
                     span = tracer.genSpan(span1.getTraceId(), span1.getId(), tracer.genSpanId(),
                             context.getMethodName(), span1.isSample(), serviceId);
