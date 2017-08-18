@@ -21,11 +21,10 @@ import com.jd.bdp.hydra.mysql.persistent.entity.ServicePara;
 import java.util.List;
 
 /**
- * User: biandi
- * Date: 13-4-3
- * Time: 下午1:17
+ * User: biandi Date: 13-4-3 Time: 下午1:17
  */
 public interface ServiceService {
-    String getServiceId(String serviceName, String appName);
-    List<ServicePara> get(Integer appId);
+	String getServiceId(String serviceName, String appName);
+
+	List<ServicePara> get(Integer appId);
 }

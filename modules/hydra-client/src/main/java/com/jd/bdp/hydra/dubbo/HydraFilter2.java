@@ -180,13 +180,13 @@ public class HydraFilter2 implements Filter {
 
     /* 加载Filter的时候加载hydra配置上下文 */
     /**/
-    static {
+   /* static {
         logger.info("Hydra filter is loading hydra-config file...");
         String resourceName = "classpath*:META-INF/spring/hydra-config.xml";
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(resourceName.split("[,\\s]+"));
    
         logger.info("Hydra config context is starting,config file path is:{}" , resourceName);
         context.start();
-    }
+    }*/
 
 }

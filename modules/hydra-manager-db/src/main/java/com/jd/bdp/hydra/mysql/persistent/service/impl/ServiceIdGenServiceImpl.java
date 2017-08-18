@@ -27,6 +27,11 @@ import com.jd.bdp.hydra.mysql.persistent.service.ServiceIdGenService;
  */
 public class ServiceIdGenServiceImpl implements ServiceIdGenService {
 
+	/**
+	 初始化生成策略数据，serviceId由head+max_id两部分组成max_id和head分别自增。
+	head自增至26之后重置为0（为了配合hbase分区策略，hbase分多少个区，则max_head为多少）
+	max_id自增值9999后后重置为0
+	 */
     @Override
     public synchronized String getNewServiceId() {
         ServiceIdGen serviceIdGen = serviceIdGenMapper.getServiceIdGen();
