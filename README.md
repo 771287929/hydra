@@ -16,9 +16,9 @@ Hydra自身提供跟踪数据展现功能，基于angularJS和D3.js。
 
 
 
-##重构
+## 重构
 
-###已完成
+### 已完成
 对于hydra重新梳理代码结构，以应用于现有的框架系统: 
 
 1. 重命名 hydra-mysql为hydra-store-mysql;
@@ -36,10 +36,10 @@ Hydra自身提供跟踪数据展现功能，基于angularJS和D3.js。
 3.  而对于hydra-manager-db中实现，只保证的单机的并发性，而对于集群并没有提供保证(对于这部分功能解决方案即 自旋+单数据库乐观锁来解决并发的问题,服务的数据量目前来说单库的存储量是可以容纳的)，考虑到这个服务并发性并不很高，就不重构了;
 
 
-###使用方式
+### 使用方式
 
-####应用
-1. 引入相应的hydar-client jar
+#### 应用
+1. 引入相应的hydra-client jar
 			
 		<dependency>
 			<groupId>com.jd.bdp</groupId>
@@ -51,20 +51,20 @@ Hydra自身提供跟踪数据展现功能，基于angularJS和D3.js。
 
 		<import resource="classpath*:META-INF/spring/hydra-config.xml"/>
 	
-####hydra-collector
+#### hydra-collector
 		更改mysql的地址，以及相应的注册中心地址
 		命令 sh collector-mysql.sh start
 
-####hydar-manager
+#### hydar-manager
 
 	更改mysql的地址，以及相应的注册中心地址
 	启动命令  sh manager.sh start
 
-####hydar-web
+#### hydar-web
 
 	更改mysql的地址，将war部署到tomcat容器运行;
    
-###后期计划
+### 后期计划
 
 1. 将metaq更换掉，或者新增其他的消息队列，因公司不使用它;
 2. hydra-store-hbase代码的梳理与重构;
